@@ -5,17 +5,20 @@ import {
 import User from "../model/userModel.js";
 import Movie from "./../model/movieModel.js";
 import { newToken } from "../utils/jwtHandler.js";
-import { mongoIdValidator } from "../validators/mongoIdValidator.js";
 import { NotfoundError, BadUserRequestError } from "../error/error.js";
 import bcrypt from "bcrypt";
-// console.log(req.user._id);
-// change the bcrypt to saving in a mongoose hook instead
 
 export default class UserControllers {
-  static async createUser(req, res, next) {
+  // CREATE USER CONTROLLER
+
+  /**
+   *
+   * @param {*} req - request object
+   * @param {*} res - response object
+   */
+  static async createUser(req, res) {
     const { error } = createUserValidator.validate(req.body);
     if (error) throw error;
-    // Use the or mongodb operator to make this user.find email or username at once
     const emailExists = await User.find({ email: req.body.email });
     if (emailExists.length > 0)
       throw new BadUserRequestError("A user with that email alraedy exists");
@@ -43,7 +46,12 @@ export default class UserControllers {
       },
     });
   }
-
+  // LOGIN CONTROLLER
+  /**
+   *
+   * @param {*} req - request object
+   * @param {*} res - response object
+   */
   static async loginUser(req, res) {
     const { error } = loginUserValidator.validate(req.body);
     if (error) throw error;
@@ -77,8 +85,12 @@ export default class UserControllers {
     });
   }
 
-  // Add movie to wishlist
-
+  // ADD MOVIE TO WISHLIST CONTROLLER
+  /**
+   *
+   * @param {*} req - request object
+   * @param {*} res - response object
+   */
   static async addMovieToWishlist(req, res) {
     const movieInCollection = await Movie.find({
       _id: req.body.selectedMovieId,
@@ -110,6 +122,12 @@ export default class UserControllers {
     });
   }
 
+  // GET ALL MOVIES IN WISHLIST CONTROLLER
+  /**
+   *
+   * @param {*} req - request object
+   * @param {*} res - response object
+   */
   static async getAllMoviesInWishlist(req, res) {
     console.log(req.user.id);
     const user = await User.findOne({ _id: req.user.id }).populate(
