@@ -4,6 +4,8 @@ export const createUserValidator = Joi.object({
   firstname: Joi.string().required(),
   lastname: Joi.string().required(),
   username: Joi.string().required(),
+  movieWishlist: Joi.array().optional(),
+
   email: Joi.string()
     .regex(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
     .required()
@@ -19,11 +21,6 @@ export const createUserValidator = Joi.object({
       "string.empty": `Password cannot be empty`,
       "any.required": `Password is required`,
     }),
-
-  // repeatPassword: Joi.valid(userData.password).messages({
-  //   "any.only": "The two passwords do not match",
-  //   "any.required": "Please re-enter the password",
-  // }),
 });
 
 export const loginUserValidator = Joi.object({

@@ -12,4 +12,10 @@ export class BadUserRequestError extends Error {
   }
 }
 
-// Add unauthorized error extended class
+export class UnAuthorizedError extends Error {
+  constructor(message) {
+    super(message);
+    this.status = 401;
+    this.errorType = "UnAuthorizedError";
+  }
+}

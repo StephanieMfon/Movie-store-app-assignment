@@ -7,6 +7,7 @@ const addNewMovieValidator = Joi.object({
   isDeleted: Joi.boolean().optional(),
   status: Joi.string().optional(),
   title: Joi.string().required().min(3),
+  movieWishlist: Joi.string().optional(),
   description: Joi.string().required().min(15),
   movieLength: Joi.string().required(),
   yearReleased: Joi.number().required(),
